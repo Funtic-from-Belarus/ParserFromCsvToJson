@@ -50,13 +50,7 @@ if __name__ == "__main__":
         print("\nВнимание: колонки в файле некорректны")
         exit(1)
 
-    if len(df.columns) == 2 and ('audiofile' in df.columns or 'transcript' in df.columns):
-        result = df[df['transcript'].notna()]
-        json_data = create_json_data(result)
-        with open(args.output_json, 'w', encoding='utf-8') as f:
-            json.dump(json_data, f, indent=4, ensure_ascii=False)
-        exit(1)
-    elif len(df.columns) > 2 and not ('audiofile' in df.columns or 'transcript' in df.columns):
+    if len(df.columns) == 2 and not ('audiofile' in df.columns or 'transcript' in df.columns):
         df.columns = ['audiofile', 'transcript']
         print("Внимание: колонки в файле должны быть названы 'audiofile' и 'transcript'.")
     elif 'audiofile' in df.columns and 'transcript' in df.columns and len(df.columns) > 2:
